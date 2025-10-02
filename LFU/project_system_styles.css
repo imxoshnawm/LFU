@@ -1,0 +1,1516 @@
+/* ==========================================================================
+   سیستەمی پڕۆژەکان - دیزاینی مۆدێرن و باوڕپێنەکراو
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* کۆگاکان و گۆڕاوەکان */
+:root {
+    /* ڕەنگە سەرەکیەکان - پالێتی گرادیەنت */
+    --primary-start: #667eea;
+    --primary-end: #764ba2;
+    --secondary-start: #f093fb;
+    --secondary-end: #f5576c;
+    --accent-start: #4facfe;
+    --accent-end: #00f2fe;
+    --success-start: #56ab2f;
+    --success-end: #a8e6cf;
+    --warning-start: #f7971e;
+    --warning-end: #ffd200;
+    --danger-start: #ff416c;
+    --danger-end: #ff4b2b;
+    
+    /* پاشبنەما و زەمینە */
+    --bg-primary: #0a0f1c;
+    --bg-secondary: #1a1d29;
+    --bg-card: #242530;
+    --bg-glass: rgba(255, 255, 255, 0.05);
+    --bg-overlay: rgba(0, 0, 0, 0.3);
+    
+    /* نووسین و تێکست */
+    --text-primary: #ffffff;
+    --text-secondary: #b2b9d1;
+    --text-muted: #8892b0;
+    --text-accent: #64ffda;
+    
+    /* Shadow و گلۆ */
+    --shadow-sm: 0 4px 20px rgba(102, 126, 234, 0.15);
+    --shadow-md: 0 8px 40px rgba(102, 126, 234, 0.25);
+    --shadow-lg: 0 16px 60px rgba(102, 126, 234, 0.35);
+    --shadow-glow: 0 0 40px rgba(102, 126, 234, 0.5);
+    --shadow-neon: 0 0 20px rgba(100, 255, 218, 0.6);
+    
+    /* Border و Radius */
+    --radius-sm: 12px;
+    --radius-md: 20px;
+    --radius-lg: 28px;
+    --radius-xl: 40px;
+    --radius-full: 9999px;
+    
+    /* Spacing */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4rem;
+    
+    /* Animation */
+    --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Global Reset */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* پاشبنەمای ئەنیمەیت */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(79, 172, 254, 0.1) 0%, transparent 50%);
+    animation: float 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, -10px) rotate(1deg); }
+    50% { transform: translate(-5px, 5px) rotate(-1deg); }
+    75% { transform: translate(10px, -5px) rotate(0.5deg); }
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-accent) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h1 { font-size: 3.5rem; letter-spacing: -0.02em; }
+h2 { font-size: 2.75rem; letter-spacing: -0.01em; }
+h3 { font-size: 2.25rem; }
+h4 { font-size: 1.875rem; }
+h5 { font-size: 1.5rem; }
+h6 { font-size: 1.25rem; }
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+    font-weight: 400;
+}
+
+/* ==========================================================================
+   Navbar - فیوتۆڕیستیک
+   ========================================================================== */
+.navbar {
+    background: rgba(36, 37, 48, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--space-md) 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all var(--transition-normal);
+}
+
+.navbar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-start), transparent);
+    opacity: 0.6;
+}
+
+.navbar-brand {
+    font-weight: 800;
+    font-size: 1.5rem;
+    color: var(--text-primary) !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.navbar-brand::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    border-radius: var(--radius-md);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity var(--transition-normal);
+}
+
+.navbar-brand:hover::before {
+    opacity: 0.1;
+}
+
+.navbar-brand:hover {
+    transform: translateX(-3px) scale(1.02);
+    filter: drop-shadow(var(--shadow-neon));
+}
+
+.navbar-brand i {
+    font-size: 1.25rem;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.navbar-text {
+    color: var(--text-secondary) !important;
+    font-weight: 500;
+    margin-left: var(--space-lg);
+}
+
+.navbar .btn {
+    position: relative;
+    overflow: hidden;
+    border: none;
+    border-radius: var(--radius-full);
+    padding: var(--space-sm) var(--space-lg);
+    font-weight: 600;
+    transition: all var(--transition-normal);
+    margin-right: var(--space-sm);
+}
+
+.navbar .btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.navbar .btn:hover::before {
+    left: 100%;
+}
+
+.navbar .btn-outline-light {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    backdrop-filter: blur(10px);
+}
+
+.navbar .btn-outline-light:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   Cards - نئۆمۆرفیزم + گلاس
+   ========================================================================== */
+.card {
+    background: rgba(36, 37, 48, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: var(--radius-lg);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    position: relative;
+    margin-bottom: var(--space-xl);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-lg);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card-header {
+    background: rgba(255, 255, 255, 0.02);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: var(--space-lg);
+    position: relative;
+}
+
+.card-body {
+    padding: var(--space-xl);
+    position: relative;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-md);
+    background: linear-gradient(135deg, var(--text-primary), var(--text-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.card-text {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* نوعە تایبەتەکانی کارد */
+.form-card {
+    background: rgba(102, 126, 234, 0.05);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+}
+
+.form-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-start), var(--primary-end));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+}
+
+.stats-card {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    position: relative;
+    overflow: hidden;
+}
+
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.3), transparent, rgba(118, 75, 162, 0.3), transparent);
+    animation: rotate 20s linear infinite;
+    opacity: 0.1;
+}
+
+@keyframes rotate {
+    100% { transform: rotate(360deg); }
+}
+
+.project-card {
+    position: relative;
+    background: rgba(36, 37, 48, 0.8);
+    transition: all var(--transition-normal);
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    padding: 2px;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.project-card:hover::after {
+    opacity: 1;
+}
+
+/* ==========================================================================
+   Form Elements - فیوتۆڕیستیک
+   ========================================================================== */
+.form-control,
+.form-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    padding: var(--space-md);
+    font-size: 1rem;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    transition: all var(--transition-normal);
+    position: relative;
+}
+
+.form-control::placeholder {
+    color: var(--text-muted);
+}
+
+.form-control:focus,
+.form-select:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--accent-start);
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.form-label {
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: var(--space-sm);
+    display: block;
+    position: relative;
+}
+
+.form-label::before {
+    content: '';
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--accent-start), var(--accent-end));
+    border-radius: var(--radius-full);
+    opacity: 0.7;
+}
+
+/* ==========================================================================
+   Buttons - نئۆن و گلۆ
+   ========================================================================== */
+.btn {
+    border: none;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: var(--space-md) var(--space-xl);
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-end), var(--primary-start));
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: var(--shadow-glow);
+    filter: brightness(1.1);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-start), var(--success-end));
+    color: white;
+    box-shadow: 0 4px 20px rgba(86, 171, 47, 0.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 40px rgba(86, 171, 47, 0.5);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning-start), var(--warning-end));
+    color: white;
+    box-shadow: 0 4px 20px rgba(247, 151, 30, 0.3);
+}
+
+.btn-warning:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 40px rgba(247, 151, 30, 0.5);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger-start), var(--danger-end));
+    color: white;
+    box-shadow: 0 4px 20px rgba(255, 65, 108, 0.3);
+}
+
+.btn-danger:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 40px rgba(255, 65, 108, 0.5);
+}
+
+.btn-outline-primary {
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid var(--primary-start);
+    color: var(--primary-start);
+    position: relative;
+}
+
+.btn-outline-primary::before {
+    background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+    opacity: 0;
+    z-index: -1;
+    left: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.btn-outline-primary:hover {
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-outline-primary:hover::before {
+    opacity: 1;
+}
+
+/* Button Sizes */
+.btn-sm {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: 0.85rem;
+}
+
+.btn-lg {
+    padding: var(--space-lg) var(--space-2xl);
+    font-size: 1.1rem;
+}
+
+/* ==========================================================================
+   Alerts - گلۆینگ
+   ========================================================================== */
+.alert {
+    background: rgba(36, 37, 48, 0.8);
+    border: none;
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+}
+
+.alert::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+.alert-success {
+    border-left: 3px solid var(--success-start);
+    background: linear-gradient(135deg, rgba(86, 171, 47, 0.1), rgba(168, 230, 207, 0.05));
+    color: var(--success-end);
+    box-shadow: 0 4px 20px rgba(86, 171, 47, 0.2);
+}
+
+.alert-success::before {
+    background: linear-gradient(180deg, var(--success-start), var(--success-end));
+}
+
+.alert-danger {
+    border-left: 3px solid var(--danger-start);
+    background: linear-gradient(135deg, rgba(255, 65, 108, 0.1), rgba(255, 75, 43, 0.05));
+    color: #ff8a9b;
+    box-shadow: 0 4px 20px rgba(255, 65, 108, 0.2);
+}
+
+.alert-danger::before {
+    background: linear-gradient(180deg, var(--danger-start), var(--danger-end));
+}
+
+.alert-warning {
+    border-left: 3px solid var(--warning-start);
+    background: linear-gradient(135deg, rgba(247, 151, 30, 0.1), rgba(255, 210, 0, 0.05));
+    color: #ffcc70;
+    box-shadow: 0 4px 20px rgba(247, 151, 30, 0.2);
+}
+
+.alert-warning::before {
+    background: linear-gradient(180deg, var(--warning-start), var(--warning-end));
+}
+
+.alert-info {
+    border-left: 3px solid var(--accent-start);
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.05));
+    color: var(--accent-end);
+    box-shadow: 0 4px 20px rgba(79, 172, 254, 0.2);
+}
+
+.alert-info::before {
+    background: linear-gradient(180deg, var(--accent-start), var(--accent-end));
+}
+
+.alert-primary {
+    border-left: 3px solid var(--primary-start);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
+    color: #a8b3f0;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.2);
+}
+
+.alert-primary::before {
+    background: linear-gradient(180deg, var(--primary-start), var(--primary-end));
+}
+
+/* ==========================================================================
+   Badges - نئۆن
+   ========================================================================== */
+.badge {
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+    padding: var(--space-sm) var(--space-md);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), transparent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+}
+
+.badge.bg-success {
+    background: linear-gradient(135deg, var(--success-start), var(--success-end)) !important;
+    box-shadow: 0 0 20px rgba(86, 171, 47, 0.5);
+}
+
+.badge.bg-warning {
+    background: linear-gradient(135deg, var(--warning-start), var(--warning-end)) !important;
+    box-shadow: 0 0 20px rgba(247, 151, 30, 0.5);
+}
+
+.badge.bg-danger {
+    background: linear-gradient(135deg, var(--danger-start), var(--danger-end)) !important;
+    box-shadow: 0 0 20px rgba(255, 65, 108, 0.5);
+}
+
+.badge.bg-info {
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end)) !important;
+    box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
+}
+
+.badge.bg-primary {
+    background: linear-gradient(135deg, var(--primary-start), var(--primary-end)) !important;
+    box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+}
+
+/* ==========================================================================
+   Images - هۆلۆگرافیک
+   ========================================================================== */
+.project-image,
+.image-preview {
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-image::before,
+.image-preview::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.2), rgba(79, 172, 254, 0.2));
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    z-index: 1;
+}
+
+.project-image:hover::before,
+.image-preview:hover::before {
+    opacity: 1;
+}
+
+.project-image:hover,
+.image-preview:hover {
+    transform: scale(1.05) rotateY(5deg);
+    box-shadow: var(--shadow-lg);
+    filter: brightness(1.1) saturate(1.2);
+}
+
+.image-gallery img {
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border-radius: var(--radius-md);
+    position: relative;
+}
+
+.image-gallery img:hover {
+    transform: scale(1.08);
+    z-index: 10;
+}
+
+/* ==========================================================================
+   Rating - ئەستێرە نئۆن
+   ========================================================================== */
+.rating-stars {
+    color: #ffd700;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.rating-stars::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.rating-stars.hover::before,
+.rating-stars.selected::before {
+    opacity: 1;
+}
+
+.rating-stars.hover,
+.rating-stars.selected {
+    color: #ffed4a;
+    transform: scale(1.2) rotate(5deg);
+    text-shadow: 0 0 20px rgba(255, 215, 0, 1);
+}
+
+/* ==========================================================================
+   Progress Bar - نئۆن
+   ========================================================================== */
+.progress {
+    height: 12px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    100% { transform: translateX(100%); }
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+    border-radius: inherit;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(79, 172, 254, 0.6);
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    border-radius: var(--radius-full) var(--radius-full) 0 0;
+}
+
+.progress-bar.bg-warning {
+    background: linear-gradient(90deg, var(--warning-start), var(--warning-end));
+    box-shadow: 0 0 15px rgba(247, 151, 30, 0.6);
+}
+
+/* ==========================================================================
+   Modal - هۆلۆگرافیک
+   ========================================================================== */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    background: rgba(36, 37, 48, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.5), rgba(79, 172, 254, 0.3), transparent);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--space-xl);
+    background: rgba(255, 255, 255, 0.02);
+    position: relative;
+}
+
+.modal-title {
+    background: linear-gradient(135deg, var(--text-primary), var(--text-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700;
+}
+
+.modal-body {
+    padding: var(--space-xl);
+    color: var(--text-secondary);
+}
+
+.btn-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    padding: var(--space-sm);
+    border-radius: 50%;
+    transition: all var(--transition-fast);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-close:hover {
+    background: rgba(255, 65, 108, 0.2);
+    color: var(--danger-start);
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* ==========================================================================
+   Table - سایبەرپەنک
+   ========================================================================== */
+.table {
+    background: rgba(36, 37, 48, 0.6);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.table th {
+    background: rgba(102, 126, 234, 0.1);
+    border-bottom: 2px solid var(--accent-start);
+    color: var(--text-primary);
+    font-weight: 700;
+    padding: var(--space-lg);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.85rem;
+    position: relative;
+}
+
+.table th::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent-start), var(--accent-end));
+}
+
+.table td {
+    padding: var(--space-lg);
+    color: var(--text-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all var(--transition-fast);
+}
+
+.table tbody tr {
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.table tbody tr::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--accent-start), var(--accent-end));
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.05);
+    transform: scale(1.01);
+}
+
+.table tbody tr:hover::before {
+    opacity: 1;
+}
+
+.table tbody tr:hover td {
+    color: var(--text-primary);
+}
+
+/* ==========================================================================
+   Carousel - هۆلۆگرافیک
+   ========================================================================== */
+.carousel {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-lg);
+}
+
+.carousel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--accent-start), var(--accent-end), var(--primary-start));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    z-index: 10;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 60px;
+    height: 60px;
+    background: rgba(36, 37, 48, 0.8);
+    border-radius: 50%;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all var(--transition-normal);
+    opacity: 0.7;
+}
+
+.carousel-control-prev {
+    left: 20px;
+}
+
+.carousel-control-next {
+    right: 20px;
+}
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    background: rgba(102, 126, 234, 0.8);
+    border-color: var(--accent-start);
+    opacity: 1;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+}
+
+/* ==========================================================================
+   Special Effects و Animations
+   ========================================================================== */
+
+/* Voting Status Alert */
+.voting-status {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    z-index: 1020;
+    animation: slideInRight 0.8s var(--bounce);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%) rotateY(90deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) rotateY(0);
+        opacity: 1;
+    }
+}
+
+/* Pulse Animation بۆ دوگمە گرنگەکان */
+.btn-primary,
+.btn-success {
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(102, 126, 234, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+}
+
+/* Loading Spinner */
+.loading {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    border-top: 3px solid var(--accent-start);
+    border-right: 3px solid var(--accent-end);
+    animation: spin 1s linear infinite;
+    position: relative;
+}
+
+.loading::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    animation: rotate 2s linear infinite reverse;
+    z-index: -1;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Fade In Animation */
+.fade-in {
+    animation: fadeInUp 0.8s var(--bounce);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Glitch Effect بۆ ناونیشانەکان */
+.glitch {
+    position: relative;
+    color: var(--text-primary);
+    animation: glitch 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.glitch::before {
+    animation: glitch-1 0.5s infinite;
+    color: var(--accent-start);
+    z-index: -1;
+}
+
+.glitch::after {
+    animation: glitch-2 0.5s infinite;
+    color: var(--danger-start);
+    z-index: -2;
+}
+
+@keyframes glitch {
+    0%, 100% { transform: translate(0); }
+    20% { transform: translate(-2px, 2px); }
+    40% { transform: translate(-2px, -2px); }
+    60% { transform: translate(2px, 2px); }
+    80% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-1 {
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(-2px, -2px); }
+    20% { transform: translate(2px, 2px); }
+    30% { transform: translate(-2px, 2px); }
+    40% { transform: translate(2px, -2px); }
+}
+
+@keyframes glitch-2 {
+    0%, 100% { transform: translate(0); }
+    10% { transform: translate(2px, 2px); }
+    20% { transform: translate(-2px, -2px); }
+    30% { transform: translate(2px, -2px); }
+    40% { transform: translate(-2px, 2px); }
+}
+
+/* ==========================================================================
+   Login Page - سایبەرپەنک
+   ========================================================================== */
+.login-container {
+    min-height: 100vh;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.3) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        linear-gradient(45deg, transparent 49%, rgba(102, 126, 234, 0.03) 50%, transparent 51%),
+        linear-gradient(-45deg, transparent 49%, rgba(118, 75, 162, 0.03) 50%, transparent 51%);
+    background-size: 60px 60px;
+    animation: slide 20s linear infinite;
+}
+
+@keyframes slide {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(60px, 60px); }
+}
+
+.login-card {
+    background: rgba(36, 37, 48, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-2xl);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    overflow: hidden;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--primary-start), var(--accent-start), var(--primary-end));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+}
+
+.login-card h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, var(--text-primary), var(--text-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.login-card .form-control {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-lg);
+    font-size: 1.1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-login {
+    width: 100%;
+    padding: var(--space-lg);
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, var(--primary-start), var(--primary-end));
+    border: none;
+    border-radius: var(--radius-lg);
+    color: white;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-glow);
+    transition: all var(--transition-normal);
+}
+
+.btn-login::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.8s;
+}
+
+.btn-login:hover::before {
+    left: 100%;
+}
+
+.btn-login:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, var(--primary-end), var(--primary-start));
+}
+
+/* ==========================================================================
+   Admin Panel Styles
+   ========================================================================== */
+.user-card {
+    background: rgba(36, 37, 48, 0.4);
+    border-left: 3px solid transparent;
+    border-image: linear-gradient(180deg, var(--accent-start), var(--accent-end)) 1;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.user-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--success-start), var(--success-end));
+    transform: scaleY(0);
+    transition: transform var(--transition-normal);
+}
+
+.user-card:hover::before {
+    transform: scaleY(1);
+}
+
+.user-card:hover {
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateX(10px);
+    box-shadow: var(--shadow-md);
+}
+
+.ranking-badge {
+    font-size: 1.5rem;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+    background: linear-gradient(135deg, #ffd700, #ffed4a);
+    color: var(--bg-primary);
+    font-weight: 800;
+    text-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Vote Card */
+.vote-card {
+    background: linear-gradient(135deg, rgba(36, 37, 48, 0.95), rgba(42, 44, 56, 0.95));
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.vote-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(135deg, var(--primary-start), var(--accent-start), var(--primary-end));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media (max-width: 1024px) {
+    :root {
+        --space-xl: 2rem;
+        --space-2xl: 3rem;
+    }
+    
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+    
+    .card-body {
+        padding: var(--space-lg);
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --space-lg: 1.5rem;
+        --space-xl: 2rem;
+    }
+    
+    .container {
+        padding: 0 var(--space-md);
+    }
+    
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.75rem; }
+    
+    .btn {
+        padding: var(--space-md) var(--space-lg);
+        font-size: 0.9rem;
+    }
+    
+    .voting-status {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-bottom: var(--space-lg);
+        animation: fadeInDown 0.6s ease;
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .login-card {
+        margin: var(--space-lg);
+        padding: var(--space-xl);
+    }
+    
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 576px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+    
+    .card {
+        margin-bottom: var(--space-lg);
+        border-radius: var(--radius-md);
+    }
+    
+    .card-body {
+        padding: var(--space-md);
+    }
+    
+    .btn-group-sm .btn {
+        padding: var(--space-sm);
+        font-size: 0.8rem;
+    }
+    
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.5rem; }
+    
+    .rating-stars {
+        font-size: 1.25rem;
+    }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+    body {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .navbar,
+    .btn,
+    .voting-status,
+    .alert-dismissible .btn-close {
+        display: none !important;
+    }
+    
+    .card {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ddd !important;
+        color: black !important;
+    }
+    
+    .card-title,
+    h1, h2, h3, h4, h5, h6 {
+        color: black !important;
+        -webkit-text-fill-color: black !important;
+    }
+}
+
+/* ==========================================================================
+   Accessibility
+   ========================================================================== */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Focus States */
+.btn:focus-visible,
+.form-control:focus-visible,
+.form-select:focus-visible {
+    outline: 2px solid var(--accent-start);
+    outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    :root {
+        --text-primary: #ffffff;
+        --text-secondary: #ffffff;
+        --bg-card: #000000;
+        --bg-secondary: #000000;
+    }
+    
+    .btn {
+        border: 2px solid currentColor;
+    }
+    
+    .card {
+        border: 2px solid var(--text-primary);
+    }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .btn::before,
+    .card::before,
+    body::before {
+        display: none;
+    }
+}
